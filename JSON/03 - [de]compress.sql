@@ -1,3 +1,10 @@
+/*
+    Скрипт демонстрирует сжатие и распаковку данных JSON в SQL Server с помощью функций COMPRESS и DECOMPRESS.
+    Основные функции:
+    - Сравнение хранения JSON-данных в сжатом и несжатом виде
+    - Анализ производительности операций вставки
+    - Примеры использования временных таблиц для тестирования
+*/
 SET NOCOUNT ON
 
 USE tempdb
@@ -38,7 +45,6 @@ SET STATISTICS IO, TIME OFF
     #Compress:   CPU time = 218 ms, elapsed time = 280 ms
 */
 
-------------------------------------------------------
 
 SELECT obj_name = OBJECT_NAME(p.[object_id])
      , a.[type_desc]
@@ -48,7 +54,6 @@ FROM sys.partitions p
 JOIN sys.allocation_units a ON p.[partition_id] = a.container_id
 WHERE p.[object_id] IN (OBJECT_ID('#Compress'), OBJECT_ID('#NoCompress'))
 
-------------------------------------------------------
 
 SET STATISTICS IO, TIME ON
 
@@ -70,7 +75,6 @@ SET STATISTICS IO, TIME OFF
        CPU time = 109 ms, elapsed time = 212 ms
 */
 
-------------------------------------------------------
 
 ALTER TABLE #Compress ADD EventType_Persisted
     AS CAST(JSON_VALUE(CAST(DECOMPRESS(JSON_CompressVal) AS NVARCHAR(MAX)), '$.Event') AS VARCHAR(200)) PERSISTED
@@ -83,7 +87,6 @@ GO
 CREATE INDEX ix ON #Compress (EventType_NonPersisted)
 GO
 
-------------------------------------------------------
 
 SET STATISTICS TIME ON
 
@@ -102,7 +105,6 @@ SET STATISTICS TIME OFF
     EventType_NonPersisted + Index: CPU time = 16 ms, elapsed time = 129 ms
 */
 
-------------------------------------------------------
 
 SET STATISTICS TIME ON
 
@@ -121,7 +123,6 @@ SET STATISTICS TIME OFF
     EventType_NonPersisted + Index: CPU time = 0 ms,  elapsed time = 195 ms
 */
 
-------------------------------------------------------
 
 DECLARE @json NVARCHAR(MAX) = (
         SELECT t.[name]

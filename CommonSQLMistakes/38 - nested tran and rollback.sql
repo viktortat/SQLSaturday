@@ -1,3 +1,11 @@
+/*
+    Скрипт демонстрирует работу с вложенными транзакциями и откатами (ROLLBACK) в SQL Server.
+    Основные функции:
+    - Примеры вложенных транзакций и SAVE TRAN
+    - Демонстрация поведения @@trancount и отката на разных уровнях
+    - Анализ типичных ошибок при использовании ROLLBACK
+    - Рекомендации по управлению транзакциями
+*/
 DROP TABLE IF EXISTS #tran
 CREATE TABLE #tran (id INT)
 GO
@@ -16,7 +24,6 @@ SELECT @@trancount
 
 SELECT * FROM #tran
 
----------------------
 
 DROP TABLE IF EXISTS #tran
 CREATE TABLE #tran (id INT)

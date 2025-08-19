@@ -1,3 +1,13 @@
+/*
+    Скрипт анализирует производительность различных вариантов оператора FOR JSON в SQL Server.
+    Основные функции:
+    - Сравнение режимов AUTO, PATH, WITHOUT_ARRAY_WRAPPER, ROOT
+    - Замер времени выполнения запросов
+    - Примеры вложенных запросов с FOR JSON
+    - Анализ влияния структуры запроса на производительность
+*/
+USE AdventureWorks2014
+GO
 USE AdventureWorks2014
 GO
 
@@ -23,7 +33,6 @@ SELECT s.[Name] FROM Sales.Store s FOR JSON PATH, ROOT
     18.59s - FOR JSON PATH, ROOT
 */
 
-------------------------------------------------------
 
 SELECT s.[Name]
      , x = (

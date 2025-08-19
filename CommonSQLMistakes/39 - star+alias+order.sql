@@ -1,3 +1,13 @@
+/*
+    Скрипт демонстрирует распространённые ошибки при использовании SELECT *, алиасов и сортировки в SQL Server.
+    Основные функции:
+    - Сравнение выборки всех столбцов и явного указания столбцов
+    - Примеры работы с алиасами, переименованием столбцов
+    - Ошибки при сортировке по номеру столбца и по алиасу
+    - Демонстрация влияния структуры таблицы на результаты сортировки
+*/
+USE AdventureWorks2014
+GO
 USE AdventureWorks2014
 GO
 
@@ -14,7 +24,6 @@ FROM Person.Person
 
 SET STATISTICS TIME, IO OFF
 
-------------------------------------------------------------------
 
 DROP TABLE IF EXISTS Sales.UserCurrency
 GO
@@ -26,7 +35,6 @@ INSERT INTO Sales.UserCurrency
 VALUES ('USD')
 GO
 
-------------------------------------------------------------------
 
 SELECT COUNT_BIG(*)
 FROM Sales.Currency
@@ -52,7 +60,6 @@ WHERE c.CurrencyCode IN (
     WHERE ... IN (SELECT * FROM ...)
 */
 
-------------------------------------------------------------------
 
 DROP TABLE IF EXISTS dbo.DatePeriod
 GO
@@ -66,7 +73,6 @@ INSERT INTO dbo.DatePeriod
 SELECT '2015-01-01', '2015-01-31'
 GO
 
-------------------------------------------------------------------
 
 DROP TABLE IF EXISTS dbo.DatePeriod
 GO
@@ -80,13 +86,11 @@ INSERT INTO dbo.DatePeriod (StartDate, EndDate)
 SELECT '2015-01-01', '2015-01-31'
 GO
 
-------------------------------------------------------------------
 
 SELECT TOP(1) *
 FROM dbo.DatePeriod
 ORDER BY 2 DESC
 
-------------------------------------------------------------------
 
 SELECT TOP(1) StartDate AS EndDate
             , EndDate AS StartDate

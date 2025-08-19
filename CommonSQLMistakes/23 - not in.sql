@@ -2,6 +2,16 @@ USE AdventureWorks2014
 GO
 
 SELECT COUNT_BIG(*)
+/*
+    Скрипт демонстрирует типичные ошибки и особенности использования оператора NOT IN в SQL Server, особенно при работе с NULL.
+    Основные функции:
+    - Примеры сравнения с NULL и влияние на результат
+    - Сравнение NOT IN, EXCEPT и NOT EXISTS
+    - Демонстрация ошибок при использовании NOT IN с NULL
+    - Анализ поведения CHECK-констрейнтов и группировки
+*/
+USE AdventureWorks2014
+GO
 FROM Production.Product
 
 SELECT COUNT_BIG(*)
@@ -22,7 +32,6 @@ WHERE Color IS NULL
 
 SELECT COUNT_BIG(*)
 FROM Production.Product
-WHERE Color IS NOT NULL
 
 SELECT COUNT_BIG(*)
 FROM Production.Product
@@ -37,7 +46,6 @@ DECLARE @t2 TABLE (t2 INT, UNIQUE CLUSTERED(t2))
 INSERT INTO @t2 VALUES (1)--, (NULL)
 
 SELECT *
-FROM @t1
 WHERE t1 NOT IN (SELECT t2 FROM @t2)
 
 SELECT *
@@ -45,11 +53,9 @@ FROM @t1
 WHERE t1 IN (SELECT t2 FROM @t2)
 
 /*
-    a IN (1, NULL)       ==   a=1 OR a=NULL
 
     a NOT IN (1, NULL)   ==   a<>1 AND a<>NULL
 */
-
 ------------------------------------------------------------------
 
 SELECT *
@@ -57,8 +63,6 @@ FROM @t1
 WHERE t1 NOT IN (
         SELECT t2
         FROM @t2
-        WHERE t2 IS NOT NULL
-    )
 --OPTION(RECOMPILE, QUERYTRACEON 9130)
 
 SELECT * FROM @t1

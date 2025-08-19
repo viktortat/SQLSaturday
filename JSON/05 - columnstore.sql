@@ -1,3 +1,11 @@
+/*
+     Скрипт демонстрирует работу с кластерным columnstore-индексом для хранения и обработки JSON-данных в SQL Server.
+     Основные функции:
+     - Создание временной таблицы с columnstore-индексом
+     - Вставка и хранение JSON-данных
+     - Анализ производительности операций вставки
+     - Примеры использования для оптимизации хранения больших объёмов данных
+*/
 SET NOCOUNT ON
 
 USE AdventureWorks2014
@@ -35,7 +43,6 @@ SET STATISTICS TIME OFF
     #CCI: CPU time = 140 ms, elapsed time = 136 ms
 */
 
-------------------------------------------------------
 
 USE tempdb
 GO
@@ -51,6 +58,5 @@ SELECT *
 FROM sys.dm_db_column_store_row_group_physical_stats
 WHERE [object_id] = OBJECT_ID('#CCI')
 
-------------------------------------------------------
 
 ALTER INDEX ix ON #CCI REBUILD

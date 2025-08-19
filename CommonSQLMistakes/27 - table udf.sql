@@ -1,3 +1,13 @@
+/*
+    Скрипт демонстрирует создание и использование табличных пользовательских функций (table UDF) в SQL Server.
+    Основные функции:
+    - Примеры реализации табличных UDF для возврата набора данных
+    - Сравнение производительности и планов выполнения с обычными запросами
+    - Демонстрация объединения данных из нескольких функций
+    - Анализ статистики ввода-вывода и времени выполнения
+*/
+USE AdventureWorks2014
+GO
 USE AdventureWorks2014
 GO
 
@@ -78,7 +88,6 @@ AS BEGIN
 END
 GO
 
-------------------------------------------------------------------
 
 SET STATISTICS IO, TIME ON
 
@@ -93,7 +102,6 @@ WHERE ShippingCity = 'Odessa'
 
 SET STATISTICS IO, TIME OFF
 
-------------------------------------------------------------------
 
 SELECT q.query_plan
      , t.[text]
@@ -103,7 +111,6 @@ CROSS APPLY sys.dm_exec_query_plan(s.plan_handle) q
 CROSS APPLY sys.dm_exec_sql_text(s.[sql_handle]) t
 WHERE q.objectid = OBJECT_ID('dbo.GetAllSalesInfo')
 
-------------------------------------------------------------------
 
 SET STATISTICS IO, TIME ON
 

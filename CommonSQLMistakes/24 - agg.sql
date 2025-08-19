@@ -1,3 +1,13 @@
+/*
+    Скрипт демонстрирует типичные ошибки и особенности работы с агрегатными функциями в SQL Server.
+    Основные функции:
+    - Примеры группировки и подсчёта с использованием COUNT_BIG, SUM, DISTINCT
+    - Сравнение различных способов агрегации и их влияния на результат
+    - Использование PIVOT и CASE для условной агрегации
+    - Демонстрация ошибок при группировке по нескольким столбцам
+*/
+USE AdventureWorks2014
+GO
 USE AdventureWorks2014
 GO
 
@@ -21,7 +31,6 @@ JOIN (
     GROUP BY a.StateProvinceID
 ) a ON s.StateProvinceID = a.StateProvinceID
 
-------------------------------------------------------------------
 
 SELECT StateProvince = s.[Name]
      , Country = r.[Name]
@@ -43,7 +52,6 @@ JOIN (
     GROUP BY a.StateProvinceID
 ) a ON s.StateProvinceID = a.StateProvinceID
 
-------------------------------------------------------------------
 
 SELECT
     (
@@ -79,7 +87,6 @@ SELECT COUNT_BIG(CASE WHEN StateProvinceID = 79 THEN 1 END)
 FROM Person.[Address]
 WHERE StateProvinceID IN (79, 80, 9)
 
-------------------------------------------------------------------
 
 SELECT
     (
@@ -98,7 +105,6 @@ SELECT COUNT_BIG(CASE WHEN City = 'London' THEN 1 END)
 FROM Person.[Address]
 WHERE City IN ('London', 'Paris')
 
-------------------------------------------------------------------
 
 USE AdventureWorks2008R2
 GO

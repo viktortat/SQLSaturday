@@ -1,3 +1,13 @@
+/*
+    Скрипт демонстрирует создание и использование скалярных пользовательских функций (scalar UDF) в SQL Server, а также типичные ошибки.
+    Основные функции:
+    - Примеры реализации скалярных UDF для сравнения и вычислений
+    - Сравнение производительности с эквивалентными выражениями
+    - Анализ влияния UDF на планы выполнения и время работы
+    - Демонстрация особенностей работы с NULL и SCHEMABINDING
+*/
+USE AdventureWorks2014
+GO
 USE AdventureWorks2014
 GO
 
@@ -23,7 +33,6 @@ AS BEGIN
 END
 GO
 
-------------------------------------------------------------------
 
 SET STATISTICS TIME ON
 
@@ -42,14 +51,12 @@ WHERE AddressLine1 = ISNULL(AddressLine2, '')
 
 SET STATISTICS TIME OFF
 
-------------------------------------------------------------------
 
 DROP FUNCTION IF EXISTS dbo.GetPI
 GO
 
 CREATE FUNCTION dbo.GetPI ()
 RETURNS FLOAT
---WITH SCHEMABINDING
 AS BEGIN
     RETURN PI()
 END

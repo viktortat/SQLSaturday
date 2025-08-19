@@ -1,5 +1,16 @@
 SET NOCOUNT ON
+/*
+    Скрипт демонстрирует использование вычисляемых столбцов для работы с JSON-данными в SQL Server.
+    Основные функции:
+    - Создание временной таблицы с JSON-данными
+    - Примеры фильтрации и поиска по вычисляемому столбцу
+    - Добавление вычисляемого столбца для объединения данных из JSON
+    - Анализ производительности операций
+*/
+SET NOCOUNT ON
 
+USE AdventureWorks2014
+GO
 USE AdventureWorks2014
 GO
 
@@ -22,7 +33,6 @@ FROM dbo.DatabaseLog
 
 ------------------------------------------------------
 
-SET STATISTICS IO, TIME ON
 
 SELECT *
 FROM #JSON
@@ -37,7 +47,6 @@ SET STATISTICS IO, TIME OFF
 
 ------------------------------------------------------
 
-ALTER TABLE #JSON
     ADD ObjectName AS JSON_VALUE(InfoJSON, '$.Schema') + '.' + JSON_VALUE(InfoJSON, '$.Object')
 GO
 
@@ -45,7 +54,6 @@ CREATE INDEX IX_ObjectName ON #JSON (ObjectName)
 
 ------------------------------------------------------
 
-SET STATISTICS IO, TIME ON
 
 SELECT *
 FROM #JSON

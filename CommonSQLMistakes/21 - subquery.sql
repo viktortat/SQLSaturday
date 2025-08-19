@@ -1,3 +1,13 @@
+/*
+     Скрипт демонстрирует различные подходы к использованию подзапросов в SQL Server и их влияние на производительность.
+     Основные функции:
+     - Примеры вложенных подзапросов, OUTER APPLY и JOIN с оконными функциями
+     - Сравнение способов получения последних значений по дате
+     - Демонстрация ошибок и оптимальных решений при работе с подзапросами
+     - Анализ влияния на статистику чтения и времени выполнения
+*/
+USE AdventureWorks2014
+GO
 USE AdventureWorks2014
 GO
 
@@ -11,7 +21,6 @@ SELECT p.BusinessEntityID
       )
 FROM Person.Person p
 
-------------------------------------------------------------------
 
 SELECT p.BusinessEntityID
      , (
@@ -42,7 +51,6 @@ LEFT JOIN (
     FROM Sales.SalesPersonQuotaHistory s
 ) t ON p.BusinessEntityID = t.BusinessEntityID AND t.RowNum = 1
 
-------------------------------------------------------------------
 
 SET STATISTICS TIME ON
 
@@ -66,7 +74,6 @@ ORDER BY NEWID()
 
 SET STATISTICS IO, TIME OFF
 
-------------------------------------------------------------------
 
 DECLARE @BusinessEntityID INT
       , @ModifiedDate DATETIME

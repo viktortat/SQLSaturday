@@ -1,3 +1,14 @@
+/*
+    Скрипт демонстрирует различия в хранении и работе с типами данных VARCHAR, NVARCHAR и NTEXT для JSON в SQL Server.
+    Основные функции:
+    - Создание временных таблиц с разными типами данных
+    - Массовая вставка JSON-данных для анализа хранения
+    - Сравнение производительности и особенностей хранения (IN_ROW_DATA, LOB_DATA)
+*/
+SET NOCOUNT ON
+
+USE tempdb
+GO
 SET NOCOUNT ON
 
 USE tempdb
@@ -58,7 +69,6 @@ JOIN sys.partitions p ON p.[partition_id] = a.container_id
 WHERE p.[object_id] IN (OBJECT_ID('#nvarchar'), OBJECT_ID('#ntext'), OBJECT_ID('#varchar'))
 GO
 
-------------------------------------------------------
 
 SELECT TOP(1) 1
 FROM #ntext

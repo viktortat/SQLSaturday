@@ -1,4 +1,12 @@
 /*
+    Скрипт предназначен для создания и удаления тестовой базы данных KillDB в SQL Server.
+    Основные функции:
+    - Проверка существования и удаление базы данных
+    - Создание базы данных с указанием файлов
+    - Получение информации о параметрах и состоянии баз данных
+*/
+
+/*
     CREATE TABLE model..public_table (ID INT)
 
     DROP TABLE IF EXISTS model..public_table
@@ -13,12 +21,10 @@ IF DB_ID('KillDB') IS NOT NULL BEGIN
 END
 GO
 
---CREATE DATABASE KillDB
 CREATE DATABASE KillDB ON PRIMARY (NAME = N'KillDB', FILENAME = N'Y:\KillDB.mdf')
                            LOG ON (NAME = N'KillDB_log', FILENAME = N'Y:\KillDB_log.ldf')
 GO
 
-------------------------------------------------------
 
 SELECT [name]
      , database_id
